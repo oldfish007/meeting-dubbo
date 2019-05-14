@@ -59,3 +59,4 @@ private String ignoreUrl="";
 注意忽略的URL 只是不用验证JWT
 在authFilter里面添加
 
+首先先从authcontrolers申请我的jwt

@@ -1,7 +1,7 @@
 package com.stylefeng.guns.api.user;
 
 public interface UserAPI {
-    public boolean login(String username, String password);
+    public int login(String username, String password);
 //用来注册
     boolean register(UserModel userModel);
 
