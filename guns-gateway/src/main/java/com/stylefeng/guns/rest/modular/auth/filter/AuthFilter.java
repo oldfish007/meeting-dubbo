@@ -64,7 +64,7 @@ public class AuthFilter extends OncePerRequestFilter {
                 return ;// 如果userId 为null 说明业务有问题
             }
             CurrentUser.saveUserId(userId);
-
+// 增加了这部分代码
             //验证token是否过期,包含了验证jwt是否正确
             try {
                 boolean flag = jwtTokenUtil.isTokenExpired(authToken);
