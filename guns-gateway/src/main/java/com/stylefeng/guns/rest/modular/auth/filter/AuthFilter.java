@@ -40,12 +40,14 @@ public class AuthFilter extends OncePerRequestFilter {
             chain.doFilter(request, response);
             return;
         }
-
+//获取不忽略列表 /user/check,/user/registry,/film
+        // 配置忽略列表
         String ignoreUrl = jwtProperties.getIgnoreUrl();
-        //   /user/register  注册的时候哪里有jwt
         String[] ignoreUrls = ignoreUrl.split(",");
-        for (int i=0;i<ignoreUrls.length;i++){
-            //如果能匹配上直接就忽略了
+        for(int i=0;i<ignoreUrls.length;i++){
+            System.out.println(request.getServletPath().equals(ignoreUrls[i]));
+            System.out.println(request.getServletPath());
+            System.out.println(ignoreUrls[i]);
             if(request.getServletPath().equals(ignoreUrls[i])){
                 chain.doFilter(request, response);
                 return;

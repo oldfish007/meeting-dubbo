@@ -60,3 +60,22 @@ private String ignoreUrl="";
 在authFilter里面添加
 
 首先先从authcontrolers申请我的jwt
+
+
+DAO层生成代码
+EntityGenerator
+配置
+gc.setOutputDir("E:\\2018\\syxc\\JOB\\guns\\guns-user\\src\\main\\java");
+修改数据源
+dsc.setUrl("jdbc:mysql://127.0.0.1:3306/guns_rest?autoReconnect=true&useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8");
+ strategy.setInclude(new String[]{"mooc_user_t"});
+ 配置生成位置
+ pc.setEntity("com.stylefeng.guns.rest.common.persistence.model");
+ pc.setMapper("com.stylefeng.guns.rest.common.persistence.dao");
+ pc.setXml("com.stylefeng.guns.rest.common.persistence.dao.mapping");
+
+注意微服务里面 出现service 就是暴露接口的实现 跟我们单体的serive有所区别
+
+Caused by: java.lang.IllegalStateException: Ambiguous mapping. Cannot map 'userController' method
+public com.stylefeng.guns.rest.modular.vo.ResponseVO com.stylefeng.guns.rest.modular.user.UserController.logout(com.stylefeng.guns.api.user.UserModel)
+to {[/user/check],methods=[POST]}: There is already 'userController' bean method

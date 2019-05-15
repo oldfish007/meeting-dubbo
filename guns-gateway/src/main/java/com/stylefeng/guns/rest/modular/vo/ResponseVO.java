@@ -18,6 +18,15 @@ public class ResponseVO<M> {
          return responseVO;
 
     }
+
+    public static<M> ResponseVO success(String message){
+        ResponseVO responseVO = new ResponseVO();
+        responseVO.setStatus(0);
+        responseVO.setMessage(message);
+        return responseVO;
+
+    }
+
 //业务错误
     public static<M> ResponseVO serviceFail(String msg){
         ResponseVO responseVO = new ResponseVO();

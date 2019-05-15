@@ -36,7 +36,7 @@ public class AuthController {
 
     @RequestMapping(value = "${jwt.auth-path}")
     public ResponseVO createAuthenticationToken(AuthRequest authRequest) {
-//前台页面输入的时候
+//前台页面输入的时候 不用guns提供的验证功能
       /*  userAPI.login(authRequest.getUserName(),authRequest.getPassword());
         boolean validate = reqValidator.validate(authRequest);*/
         boolean validate = true;
@@ -45,7 +45,6 @@ public class AuthController {
         if(userId == 0){
             validate = false;
         }
-
         if (validate) {
             final String randomKey = jwtTokenUtil.getRandomKey();
             final String token = jwtTokenUtil.generateToken(userId+"", randomKey);

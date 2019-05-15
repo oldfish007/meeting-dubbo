@@ -7,7 +7,7 @@ package com.stylefeng.guns.api.user;
  */
 public class UserInfoModel {
 
-
+    private Integer uuid;
     private String username;
     private String nickname;
     private String email;
@@ -20,6 +20,14 @@ public class UserInfoModel {
     private String headAddress;
     private Long createTime;
     private Long updateTime;
+
+    public Integer getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(Integer uuid) {
+        this.uuid = uuid;
+    }
 
     public String getUsername() {
         return username;
