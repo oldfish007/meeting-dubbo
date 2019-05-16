@@ -79,3 +79,48 @@ dsc.setUrl("jdbc:mysql://127.0.0.1:3306/guns_rest?autoReconnect=true&useUnicode=
 Caused by: java.lang.IllegalStateException: Ambiguous mapping. Cannot map 'userController' method
 public com.stylefeng.guns.rest.modular.vo.ResponseVO com.stylefeng.guns.rest.modular.user.UserController.logout(com.stylefeng.guns.api.user.UserModel)
 to {[/user/check],methods=[POST]}: There is already 'userController' bean method
+是因为在controller 注释上面@RequestMapping(name="",)应该用value
+                            192.168.1.20
+gateway                     192.168.1.21
+                            192.168.1.22
+让每一台机器都更合理的利用 这是负载均衡
+Random          随机 按照权重设置随机概率  配置到99% 和配置到%0没有区别
+RoundRobin      轮询 按照公约后的权重设置轮询概率(第一个服务1s 第二个1s 第三个一个小时没有返回)
+他不管你好久返回  只要来了第三个服务 就会放到第三胎服务器上面
+第三台机器一直返回不了  一直等待等待  这就会造成dubbo雪崩问题
+除了雪崩问题 业务会阻塞很久 这都是我们不能接受的
+这种情况下 还有一种选择就是最小活跃调用数 他就会计算你的每一个服务的返回时间
+他就会去计算 每一次服务返回的时间
+计算出当前的节点 在哪一个请求上 只要保持机器数不变
+两段式hash 这个在tomcat集群里 在dubbo服务下面一般不会选择这个
+一般来说 我们会把负载配置到服务端
+业务系统里面我们要控制负载 一定是配置在业务微服务里面
+dubbo是在服务提供者和服务消费者之间建立一个管道 这个管道在你整个服务结束之前
+他并不会结束 他一直保持在这 减少了3次握手 以及建立连接的时间 传输的速度相对比较快的
+dubbo之所以认为比cloud要快的原因就在于他的底层协议他的底层协议是TCP cloud是http
+tcp一定比http要快  dubbo比较适合的场景 数据包不大 dubbo的协议最多支撑到100K左右
+就是单数据包100K左右 1000M网除以速率 最后计算出来的公式 大概在200多K的样子
+数据包不要太大 有多个消费着对应一个服务提供者 user服务不需要提供那么多
+gateway部署10台 user服务一台就可以了
+RMI 在什么情况下回去替代dubbo 变成我们的默认协议呢
+我们的数据包大小在100K左右
+1个消费端 1个服务提供段 RMI的性能还比dubbo要好一些
+
+总结：
+       搭建框架
+       API网关与服务之间的调用方式
+       服务消费者 和 服务提供者之间的调用关系
+       dubbo特性：负载均衡、启动检查、DUBBO协议
+       什么时候用 什么时候不用
+       最后就是dubbo协议这块
+       重点了解了一下dubbo协议：
+       长连接
+       TCP协议  适用场景 数据量不大 消费者远大于提供者（就是DUBBO常见的使用协议）
+       JWT
+掌握API网关服务聚合功能实现
+       服务聚合：前端调用一个接口
+       更好的安全性  API接口做安全防护就可以了
+影片模块
+        创建API 公共model
+        从gateway出发 先把需要的接口 然后把每个接口里面需要做什么事情想清楚
+        紧接着返回在做API 跟着在做实现
