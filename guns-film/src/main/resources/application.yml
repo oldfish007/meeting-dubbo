@@ -10,7 +10,7 @@ jwt:
   md5-key: randomKey      #md5加密混淆key
 
 server:
-  port: 8083 #用户端口不能和gateway冲突
+  port: 8084 #电影影片端口不能和gateway冲突
 
 mybatis-plus:
   mapper-locations: classpath*:com/stylefeng/guns/rest/**/mapping/*.xml

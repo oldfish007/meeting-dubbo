@@ -77,7 +77,7 @@ dsc.setUrl("jdbc:mysql://127.0.0.1:3306/guns_rest?autoReconnect=true&useUnicode=
 注意微服务里面 出现service 就是暴露接口的实现 跟我们单体的serive有所区别
 
 Caused by: java.lang.IllegalStateException: Ambiguous mapping. Cannot map 'userController' method
-public com.stylefeng.guns.rest.modular.vo.ResponseVO com.stylefeng.guns.rest.modular.user.UserController.logout(com.stylefeng.guns.api.user.UserModel)
+public com.stylefeng.guns.rest.modular.vo.ResponseVO com.stylefeng.guns.rest.modular.user.UserController.logout(com.stylefeng.guns.api.user.vo.UserModel)
 to {[/user/check],methods=[POST]}: There is already 'userController' bean method
 是因为在controller 注释上面@RequestMapping(name="",)应该用value
                             192.168.1.20
@@ -124,3 +124,15 @@ RMI 在什么情况下回去替代dubbo 变成我们的默认协议呢
         创建API 公共model
         从gateway出发 先把需要的接口 然后把每个接口里面需要做什么事情想清楚
         紧接着返回在做API 跟着在做实现
+现在有很多前端的框架 在服务器端就一次性的把数据取出来渲染完了
+功能聚合
+好处：
+        1.六个接口，一次请求 同一时刻节省了5次http请求
+        2.同一个接口对外暴露，降低了前后端分离开发的难度和调试的复杂度
+坏处：
+        1. 一次获取数据过多，容易出现问题
+        BannerVO FilmInfo FilmVO
+        这三个对象是从数据库获取到的 因此放到API服务里面
+API定义电影接口
+film服务
+       生成dao层代码
