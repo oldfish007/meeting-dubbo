@@ -67,7 +67,7 @@ public class DefaultFilmServiceImpl implements FilmServiceAPI {
 
         }
         //如果不是则是列表页 同样需要限制为热映影片
-        return null;
+        return filmVO;
     }
 
     private List<FilmInfo> getFilmInfos(List<MoocFilmT> moocFilms){
@@ -92,21 +92,56 @@ public class DefaultFilmServiceImpl implements FilmServiceAPI {
 //即将上映的影片
     @Override
     public FilmVO getSoonFilms(boolean isLimit, int nums) {
-        return null;
+        FilmVO filmVO = new FilmVO();
+        List<FilmInfo> filmInfos = new ArrayList<>();
+        //判断是否是首页需要的内容
+        EntityWrapper<MoocFilmT> entityWrapper = new EntityWrapper<>();
+        entityWrapper.eq("film_status","2");
+        //如果是则限制条数 限制内容为热映影片
+        if(isLimit){
+            Page<MoocFilmT> page = new Page<>(1,nums);// 1页  每页显示条数前端传进来
+            List<MoocFilmT> moocFilms = moocFilmTMapper.selectPage(page, entityWrapper);
+            //组织filmInfo
+            filmInfos = getFilmInfos(moocFilms);
+            filmVO.setFilmNum(moocFilms.size());
+            filmVO.setFilmInfo(filmInfos);
+        }else{
+
+        }
+        //如果不是则是列表页 同样需要限制为热映影片
+        return filmVO;
     }
 //票房
     @Override
     public List<FilmInfo> getBoxRanking() {
-        return null;
+        //条件->正在上映的，票房前10名
+        EntityWrapper<MoocFilmT> entityWrapper = new EntityWrapper<>();
+        entityWrapper.eq("film_status","1");
+        Page<MoocFilmT> page = new Page<>(1,10,"film_box_office");
+        List<MoocFilmT> moocFilms = moocFilmTMapper.selectPage(page, entityWrapper);
+        List<FilmInfo> filmInfos = getFilmInfos(moocFilms);
+        return filmInfos;
     }
 
     @Override
     public List<FilmInfo> getExpertRanking() {
-        return null;
+        //条件->即将上映的，预售前10名
+        EntityWrapper<MoocFilmT> entityWrapper = new EntityWrapper<>();
+        entityWrapper.eq("film_status","2");
+        Page<MoocFilmT> page = new Page<>(1,10,"film_preSaleNum ");
+        List<MoocFilmT> moocFilmTS = moocFilmTMapper.selectPage(page, entityWrapper);
+        List<FilmInfo> filmInfos = getFilmInfos(moocFilmTS);
+        return filmInfos;
     }
 
     @Override
     public List<FilmInfo> getTop() {
-        return null;
+        //条件-》正在上映的经典影片，打分前10名
+        EntityWrapper<MoocFilmT> entityWrapper = new EntityWrapper<>();
+        entityWrapper.eq("film_status","1");
+        Page<MoocFilmT> page = new Page<>(1,10,"film_score");
+        List<MoocFilmT> moocFilmTS = moocFilmTMapper.selectPage(page, entityWrapper);
+        List<FilmInfo> filmInfos = getFilmInfos(moocFilmTS);
+        return filmInfos;
     }
 }
