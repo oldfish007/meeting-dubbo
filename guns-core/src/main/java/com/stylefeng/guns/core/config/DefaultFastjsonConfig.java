@@ -49,8 +49,10 @@ public class DefaultFastjsonConfig {
                 SerializerFeature.WriteEnumUsingToString
         );
         fastJsonConfig.setDateFormat("yyyy-MM-dd HH:mm:ss");
+        //做了一次拦截 如果不显示message": "", 就可以把底下这部分代码去掉
         ValueFilter valueFilter = new ValueFilter() {
             public Object process(Object o, String s, Object o1) {
+
                 if (null == o1) {
                     o1 = "";
                 }

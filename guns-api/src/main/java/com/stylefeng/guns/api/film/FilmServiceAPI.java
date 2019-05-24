@@ -1,6 +1,7 @@
 package com.stylefeng.guns.api.film;
 
 import com.stylefeng.guns.api.film.vo.BannerVO;
+import com.stylefeng.guns.api.film.vo.CatVO;
 import com.stylefeng.guns.api.film.vo.FilmInfo;
 import com.stylefeng.guns.api.film.vo.FilmVO;
 
@@ -20,5 +21,11 @@ public interface FilmServiceAPI {
     List<FilmInfo> getExpertRanking();
     //获取top100
     List<FilmInfo> getTop();
+
+    //分类条件
+    List<CatVO> getCats();
+    //片源条件
+
+
 
 }
